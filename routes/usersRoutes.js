@@ -1,4 +1,5 @@
 const express = require('express');
+const User = require('../models/UsersModel');
 const {
   getUsers,
   getUser,
@@ -6,8 +7,6 @@ const {
   updateUser,
   deleteUser,
 } = require('../controllers/usersController');
-
-const User = require('../models/usersModel');
 
 const router = express.Router({ mergeParams: true });
 

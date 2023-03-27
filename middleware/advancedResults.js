@@ -16,7 +16,7 @@ const advancedResults = (Model, populate) => async (req, res, next) => {
   );
 
   // {"averageCost": {"$lt": "1000"}} before parse
-  query = Model.find(JSON.parse(queryStr)).populate('courses');
+  query = Model.find(JSON.parse(queryStr)).populate({ path: 'courses' });
   // query after being parse {averageCost: {$lt: 1000}}
 
   // Select fields

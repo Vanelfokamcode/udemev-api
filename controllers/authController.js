@@ -4,6 +4,7 @@ const ErrorResponse = require('../utils/errorResponse');
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('../middleware/async');
 const crypto = require('crypto');
+
 // Get Token from model, create cookie and send a response
 const sendTokenResponse = (user, statusCode, res) => {
   //   create TOKEN
@@ -32,7 +33,7 @@ const sendTokenResponse = (user, statusCode, res) => {
   });
 };
 
-// @ desc      Register user
+// @ desc     Register user
 // @route      POST /api/v1/auth/register
 // @access     Public
 exports.register = asyncHandler(async (req, res, next) => {
@@ -74,6 +75,21 @@ exports.login = asyncHandler(async (req, res, next) => {
   }
 
   sendTokenResponse(user, 200, res);
+});
+
+//@ desc       logout
+// @route      GET /api/v1/auth/logout
+// @access     Private
+exports.logout = asyncHandler(async (req, res, next) => {
+  // cookie expire in 10 seconds
+  res.cookie('token', 'none', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({
+    status: 'success',
+    data: {},
+  });
 });
 
 //@ desc       Get current loged in user
